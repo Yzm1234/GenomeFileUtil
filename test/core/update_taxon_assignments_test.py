@@ -54,7 +54,7 @@ class UpdateTaxonAssignmentsTest(unittest.TestCase):
             'included': ['/taxon_assignments']
         }
         # Add a new assignment
-        self.serviceImpl.update_taxon_assignments(self.ctx, {
+        self.serviceImpl.update_taxon_assignments(self.ctx, self.wsName, {
             'workspace_id': _WORKSPACE_ID,
             'object_id': _OBJECT_ID,
             'taxon_assignments': {
@@ -67,7 +67,7 @@ class UpdateTaxonAssignmentsTest(unittest.TestCase):
         print(obj['taxon_assignments'])
         self.assertEqual(obj['taxon_assignments'][taxon_key], taxon_val)
         # Update the assignment we just added
-        self.serviceImpl.update_taxon_assignments(self.ctx, {
+        self.serviceImpl.update_taxon_assignments(self.ctx, wsName=self.wsName, params={
             'workspace_id': _WORKSPACE_ID,
             'object_id': _OBJECT_ID,
             'taxon_assignments': {

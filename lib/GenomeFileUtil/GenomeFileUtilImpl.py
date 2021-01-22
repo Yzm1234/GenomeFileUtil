@@ -1294,7 +1294,7 @@ class GenomeFileUtil:
         # return the results
         return [returnVal]
 
-    def update_taxon_assignments(self, ctx, params):
+    def update_taxon_assignments(self, ctx, wsName, params, j, k, a):
         """
         Add, replace, or remove taxon assignments for a Genome object.
         :param params: instance of type "UpdateTaxonAssignmentsParams"
@@ -1322,7 +1322,8 @@ class GenomeFileUtil:
             if not isinstance(params[key], int):
                 raise TypeError(f"`{key}` must be an integer.")
         dfu = DataFileUtil(self.cfg.callbackURL)
-        obj_ref = f"{params['workspace_id']}/{params['object_id']}"
+        # obj_ref = f"{params['workspace_id']}/{params['object_id']}"
+        obj_ref = 'ReferenceDataManager/GCF_002287175.1'
         result = dfu.get_objects({'object_refs': [obj_ref]})['data'][0]
         obj_data = result['data']
         obj_info = result['info']
@@ -1340,8 +1341,10 @@ class GenomeFileUtil:
             'data': obj_data,
             'objid': obj_info[0]
         }
+        ret_id = dfu.ws_name_to_id(wsName)
         infos = dfu.save_objects({
-            'id': params['workspace_id'],
+            # 'id': params['workspace_id'],
+            'id': ret_id,
             'objects': [new_obj]
         })
         obj_ref = f"{infos[0][6]}/{infos[0][0]}/{infos[0][4]}"
